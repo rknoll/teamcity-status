@@ -1,14 +1,14 @@
 {
-  "name": "travis-ci-status-lite",
-  "main": "./lib/travis-ci-status-lite",
-  "version": "0.0.0",
-  "description": "A short description of your package",
-  "activationEvents": ["travis-ci-status-lite:toggle"],
-  "repository": "https://github.com/atom/travis-ci-status-lite",
+  "name": "travis-ci-status",
+  "main": "./lib/travis-ci-status",
+  "version": "0.9.0",
+  "description": "Add Travis CI status of the project to the Atom status bar. ",
+  "repository": "https://github.com/tombell/travis-ci-status",
   "license": "MIT",
   "engines": {
     "atom": ">0.50.0"
   },
   "dependencies": {
+    "travis-ci": "1.2.0"
   }
 }
