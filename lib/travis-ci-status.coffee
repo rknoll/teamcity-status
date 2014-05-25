@@ -13,7 +13,22 @@ module.exports =
   #
   # Returns nothing.
   activate: ->
-    @isGitHubRepo() and @isTravisProject((e) => e and @init())
+    return unless @isGitHubRepo() and @isTravisProject()
+
+    atom.travis = new TravisCi
+
+    atom.workspaceView.command 'travis-ci-status:open-on-travis', =>
+      @openOnTravis()
+
+    createStatusEntry = =>
+      nwo = @getNameWithOwner()
+      @buildStatusView = new BuildStatusView(nwo)
+
+    if atom.workspaceView.statusBar
+      createStatusEntry()
+    else
+      atom.packages.once 'activated', ->
+        createStatusEntry()
 
   # Internal: Deactive the package and destroys any views.
   #
@@ -46,34 +61,11 @@ module.exports =
     /([^\/:]+)\/([^\/]+)$/.exec(url.replace(/\.git$/, ''))[0]
 
   # Internal: Check there is a .travis.yml configuration file.
-  # Bool result is passed in callback.
   #
   # Returns nothing.
   isTravisProject: (callback) ->
-    return unless callback instanceof Function
-    return callback(false) unless atom.project.path?
-    conf = path.join(atom.project.path, '.travis.yml')
-    fs.exists(conf, callback)
-
-  # Internal: initializes any views.
-  #
-  # Returns nothing
-  init: ->
-    atom.travis = new TravisCi
-
-    atom.workspaceView.command 'travis-ci-status:open-on-travis', =>
-      @openOnTravis()
-
-    createStatusEntry = =>
-      nwo = @getNameWithOwner()
-      @buildStatusView = new BuildStatusView(nwo)
-
-    if atom.workspaceView.statusBar
-      createStatusEntry()
-    else
-      atom.packages.once 'activated', ->
-        createStatusEntry()
-    null
+    return false unless atom.project.path?
+    fs.existsSync(path.join(atom.project.path, '.travis.yml'))
 
   # Internal: Open the project on Travis CI in the default browser.
   #
