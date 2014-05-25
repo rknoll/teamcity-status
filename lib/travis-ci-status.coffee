@@ -4,7 +4,6 @@ shell = require 'shell'
 
 TravisCi = require 'travis-ci'
 
-BuildMatrixView = require './build-matrix-view'
 BuildStatusView = require './build-status-view'
 
 module.exports =
@@ -12,9 +11,6 @@ module.exports =
   configDefaults:
     useTravisCiPro: false
     personalAccessToken: '<Your personal GitHub access token>'
-
-  # Internal: The build matrix bottom panel view.
-  buildMatrixView: null
 
   # Internal: The build status status bar entry view.
   buildStatusView: null
@@ -31,7 +27,6 @@ module.exports =
   deactivate: ->
     atom.travis = null
     @buildStatusView?.destroy()
-    @buildMatrixView?.destroy()
 
   # Internal: Serialize each view state so it can be restored when activated.
   #
@@ -80,8 +75,7 @@ module.exports =
 
     createStatusEntry = =>
       nwo = @getNameWithOwner()
-      @buildMatrixView = new BuildMatrixView(nwo)
-      @buildStatusView = new BuildStatusView(nwo, @buildMatrixView)
+      @buildStatusView = new BuildStatusView(nwo)
 
     if atom.workspaceView.statusBar
       createStatusEntry()

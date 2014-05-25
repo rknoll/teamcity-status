@@ -13,8 +13,7 @@ class BuildStatusView extends View
   # Internal: Initialize the view.
   #
   # nwo    - The string of the repo owner and name.
-  # matrix - The build matrix view.
-  initialize: (@nwo, @matrix) ->
+  initialize: (@nwo) ->
     atom.workspaceView.command 'travis-ci-status:toggle', =>
       @toggle()
     @attach()
@@ -115,7 +114,6 @@ class BuildStatusView extends View
     @status.removeClass('pending success fail')
 
     if data and data['last_build_state'] is "passed"
-      @matrix.update(data['last_build_id'])
       @status.addClass('success')
     else
       @status.addClass('fail')
