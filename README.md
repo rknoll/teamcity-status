@@ -1,6 +1,6 @@
 # Travis CI Status Lite Package
 
-Add Travis CI status of the project to the Atom status bar.
+Like travis-ci-status but less pro.
 
 ## Installing
 
