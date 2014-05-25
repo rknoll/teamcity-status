@@ -1,7 +1,7 @@
 {
   "name": "travis-ci-status-lite",
   "main": "./lib/travis-ci-status",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "like travis-ci-status but less pro.",
   "repository": "https://github.com/tombell/travis-ci-status-lite",
   "license": "MIT",
