@@ -32,7 +32,7 @@ describe "TravisCiStatus", ->
       expect(atom.workspaceView.find(".travis-ci-status")).not.toExist()
 
       waitsForPromise ->
-        atom.packages.activatePackage("travis-ci-status")
+        atom.packages.activatePackage("travis-ci-status-lite")
 
       runs ->
         expect(atom.workspaceView.find(".travis-ci-status")).toExist()
