@@ -10,7 +10,7 @@ class BuildStatusView extends View
 
   # Internal: Initialize the view.
   #
-  # nwo    - The string of the repo owner and name.
+  # nwo - The string of the repo owner and name.
   initialize: (@nwo) ->
     atom.workspaceView.command 'travis-ci-status:toggle', =>
       @toggle()
