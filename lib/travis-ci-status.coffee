@@ -80,9 +80,4 @@ module.exports =
   # Returns nothing.
   openOnTravis: ->
     nwo = @getNameWithOwner()
-    domain = if atom.travis.pro
-      'magnum.travis-ci.com'
-    else
-      'travis-ci.org'
-
-    shell.openExternal("https://#{domain}/#{nwo}")
+    shell.openExternal("https://travis-ci.org/#{nwo}")
