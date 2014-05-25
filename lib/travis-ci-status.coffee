@@ -1,17 +1,11 @@
-fs = require 'fs'
-path = require 'path'
+fs    = require 'fs'
+path  = require 'path'
 shell = require 'shell'
 
-TravisCi = require 'travis-ci'
-
+TravisCi        = require './travis-ci'
 BuildStatusView = require './build-status-view'
 
 module.exports =
-  # Internal: The default configuration properties for the package.
-  configDefaults:
-    useTravisCiPro: false
-    personalAccessToken: '<Your personal GitHub access token>'
-
   # Internal: The build status status bar entry view.
   buildStatusView: null
 
@@ -65,10 +59,7 @@ module.exports =
   #
   # Returns nothing
   init: ->
-    atom.travis = new TravisCi({
-      version: '2.0.0',
-      pro: atom.config.get('travis-ci-status.useTravisCiPro')
-    })
+    atom.travis = new TravisCi
 
     atom.workspaceView.command 'travis-ci-status:open-on-travis', =>
       @openOnTravis()

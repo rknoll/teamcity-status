@@ -72,11 +72,8 @@ class BuildStatusView extends View
   # Returns nothing.
   update: =>
     return unless @hasParent()
-
     @status.addClass('pending')
-    details = @nwo.split '/'
-
-    atom.travis.repos(owner_name: details[0], name: details[1], @repoStatus)
+    atom.travis.repo(@nwo, @repoStatus)
 
   # Internal: Callback for the Travis CI repository request, updates the build
   # status.
@@ -86,13 +83,12 @@ class BuildStatusView extends View
   #
   # Returns nothing.
   repoStatus: (err, data) =>
+    @status.removeClass('pending success fail')
     return console.log "Error:", err if err?
     return if data['files'] is 'not found'
+    return if data and data['last_build_started_at'] is null
 
-    data = data['repo']
-    @status.removeClass('pending success fail')
-
-    if data and data['last_build_state'] is "passed"
+    if data and data['last_build_status'] is 0
       @status.addClass('success')
     else
       @status.addClass('fail')
