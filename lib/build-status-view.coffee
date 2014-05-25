@@ -1,7 +1,5 @@
 {View} = require 'atom'
 
-TravisCi = require 'travis-ci'
-
 module.exports =
 # Internal: The main view for displaying the status from Travis CI.
 class BuildStatusView extends View
@@ -78,24 +76,7 @@ class BuildStatusView extends View
     @status.addClass('pending')
     details = @nwo.split '/'
 
-    updateRepo = =>
-      atom.travis.repos(owner_name: details[0], name: details[1], @repoStatus)
-
-    if atom.travis.pro
-      token = atom.config.get('travis-ci-status.personalAccessToken')
-      atom.travis.authenticate(github_token: token, updateRepo)
-    else
-      updateRepo()
-
-  # Internal: Fallback to non-pro Travis CI.
-  #
-  # Returns nothing.
-  fallback: ->
-    atom.travis = new TravisCi({
-      version: '2.0.0',
-      pro: false
-    })
-    @update()
+    atom.travis.repos(owner_name: details[0], name: details[1], @repoStatus)
 
   # Internal: Callback for the Travis CI repository request, updates the build
   # status.
@@ -105,8 +86,6 @@ class BuildStatusView extends View
   #
   # Returns nothing.
   repoStatus: (err, data) =>
-    return @fallback() if atom.travis.pro and err?
-
     return console.log "Error:", err if err?
     return if data['files'] is 'not found'
 
