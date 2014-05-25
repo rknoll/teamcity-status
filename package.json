@@ -1,9 +1,9 @@
 {
-  "name": "travis-ci-status",
+  "name": "travis-ci-status-lite",
   "main": "./lib/travis-ci-status",
   "version": "0.9.0",
-  "description": "Add Travis CI status of the project to the Atom status bar. ",
-  "repository": "https://github.com/tombell/travis-ci-status",
+  "description": "like travis-ci-status but less pro.",
+  "repository": "https://github.com/tombell/travis-ci-status-lite",
   "license": "MIT",
   "engines": {
     "atom": ">0.50.0"
